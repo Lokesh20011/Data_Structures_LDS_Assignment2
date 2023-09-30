@@ -1,0 +1,26 @@
+#4. Count Pairs with Given Sum in an Array:
+def count_pairs_with_sum(arr, target_sum):
+    count = 0
+    num_frequency = {}
+    
+    for num in arr:
+        complement = target_sum - num
+        if complement in num_frequency:
+            count += num_frequency[complement]
+        if num in num_frequency:
+            num_frequency[num] += 1
+        else:
+            num_frequency[num] = 1
+    
+    return count
+
+try:
+    arr = list(map(int, input("Enter the integer array (space-separated): ").split()))
+    target_sum = int(input("Enter the target sum: "))
+    
+    pairs_count = count_pairs_with_sum(arr, target_sum)
+    print("Number of pairs with the given sum:", pairs_count)
+    
+except ValueError:
+    print("Invalid input. Please enter a valid integer array and target sum.")
+
