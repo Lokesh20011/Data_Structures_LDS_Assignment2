@@ -1,0 +1,58 @@
+#3. Merge Linked List at Alternate Positions:
+class ListNode:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+def merge_linked_lists_alternate(head1, head2):
+    dummy = ListNode(0)
+    current = dummy
+    
+    while head1 and head2:
+        current.next = head1
+        head1 = head1.next
+        current = current.next
+        
+        current.next = head2
+        head2 = head2.next
+        current = current.next
+    
+    if head1:
+        current.next = head1
+    if head2:
+        current.next = head2
+    
+    return dummy.next
+
+# Helper function to print linked list
+def print_linked_list(head):
+    while head:
+        print(head.value, end=" -> ")
+        head = head.next
+    print("None")
+
+# Get user input to create linked lists
+def create_linked_list():
+    elements = list(map(int, input("Enter the elements of the linked list (space-separated): ").split()))
+    dummy = ListNode(0)
+    current = dummy
+    for element in elements:
+        current.next = ListNode(element)
+        current = current.next
+    return dummy.next
+
+try:
+    head1 = create_linked_list()
+    head2 = create_linked_list()
+    
+    print("First linked list:")
+    print_linked_list(head1)
+    print("Second linked list:")
+    print_linked_list(head2)
+    
+    merged_head = merge_linked_lists_alternate(head1, head2)
+    print("Linked list after merging at alternate positions:")
+    print_linked_list(merged_head)
+    
+except ValueError:
+    print("Invalid input. Please enter valid integers for the linked lists.")
