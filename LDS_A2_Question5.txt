@@ -1,0 +1,25 @@
+#5. Find Duplicates in an Array:
+def find_duplicates(arr):
+    duplicates = set()
+    seen = set()
+    
+    for num in arr:
+        if num in seen:
+            duplicates.add(num)
+        else:
+            seen.add(num)
+    
+    return list(duplicates)
+
+try:
+    arr = list(map(int, input("Enter the integer array (space-separated): ").split()))
+    
+    duplicate_nums = find_duplicates(arr)
+    
+    if duplicate_nums:
+        print("Duplicate numbers:", duplicate_nums)
+    else:
+        print("No duplicates found.")
+    
+except ValueError:
+    print("Invalid input. Please enter a valid integer array.")
