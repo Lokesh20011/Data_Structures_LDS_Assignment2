@@ -1,0 +1,58 @@
+#1. Delete Elements in a Linked List Whose Sum is Equal to Zero:
+class ListNode:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+def delete_zero_sum_sublists(head):
+    dummy = ListNode(0)
+    dummy.next = head
+    prefix_sum = 0
+    prefix_sum_map = {0: dummy}
+    
+    while head:
+        prefix_sum += head.value
+        if prefix_sum in prefix_sum_map:
+            prev = prefix_sum_map[prefix_sum]
+            curr = prev.next
+            temp_sum = prefix_sum + curr.value
+            while curr != head:
+                prefix_sum_map.pop(temp_sum)
+                curr = curr.next
+                temp_sum += curr.value
+                prev.next = curr.next
+            prefix_sum_map[prefix_sum].next = head.next
+        else:
+            prefix_sum_map[prefix_sum] = head
+        head = head.next
+    
+    return dummy.next
+
+# Helper function to print linked list
+def print_linked_list(head):
+    while head:
+        print(head.value, end=" -> ")
+        head = head.next
+    print("None")
+
+# Get user input to create linked list
+def create_linked_list():
+    elements = list(map(int, input("Enter the elements of the linked list (space-separated): ").split()))
+    dummy = ListNode(0)
+    current = dummy
+    for element in elements:
+        current.next = ListNode(element)
+        current = current.next
+    return dummy.next
+
+try:
+    head = create_linked_list()
+    print("Original linked list:")
+    print_linked_list(head)
+    
+    new_head = delete_zero_sum_sublists(head)
+    print("Linked list after deletion of zero sum sublists:")
+    print_linked_list(new_head)
+    
+except ValueError:
+    print("Invalid input. Please enter valid integers for the linked list.")
