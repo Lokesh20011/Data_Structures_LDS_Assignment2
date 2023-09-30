@@ -1,0 +1,65 @@
+#2. Reverse a Linked List in Groups of Given Size:
+class ListNode:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+def reverse_linked_list_in_groups(head, k):
+    if not head or k <= 1:
+        return head
+    
+    prev = None
+    current = head
+    count = 0
+    
+    # Count the number of nodes in the current group
+    temp = head
+    while temp and count < k:
+        temp = temp.next
+        count += 1
+    
+    if count == k:
+        # Reverse the current group
+        while current and count > 0:
+            next_node = current.next
+            current.next = prev
+            prev = current
+            current = next_node
+            count -= 1
+        
+        if current:
+            head.next = reverse_linked_list_in_groups(current, k)
+        
+        return prev
+    
+    return head
+
+# Helper function to print linked list
+def print_linked_list(head):
+    while head:
+        print(head.value, end=" -> ")
+        head = head.next
+    print("None")
+
+# Get user input to create linked list
+def create_linked_list():
+    elements = list(map(int, input("Enter the elements of the linked list (space-separated): ").split()))
+    dummy = ListNode(0)
+    current = dummy
+    for element in elements:
+        current.next = ListNode(element)
+        current = current.next
+    return dummy.next
+
+try:
+    head = create_linked_list()
+    k = int(input("Enter the group size for reversing: "))
+    print("Original linked list:")
+    print_linked_list(head)
+    
+    new_head = reverse_linked_list_in_groups(head, k)
+    print(f"Linked list after reversing in groups of size {k}:")
+    print_linked_list(new_head)
+    
+except ValueError:
+    print("Invalid input. Please enter valid integers for the linked list and group size.")
