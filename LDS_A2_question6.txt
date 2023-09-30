@@ -1,0 +1,17 @@
+#6. Find Kth Largest and Kth Smallest Number in an Array:
+def kth_largest_smallest(arr, k):
+    arr.sort()
+    kth_largest = arr[-k]
+    kth_smallest = arr[k - 1]
+    return kth_largest, kth_smallest
+
+try:
+    arr = list(map(int, input("Enter the integer array (space-separated): ").split()))
+    k = int(input("Enter the value of k: "))
+    
+    kth_largest, kth_smallest = kth_largest_smallest(arr, k)
+    print(f"{k}th largest number:", kth_largest)
+    print(f"{k}th smallest number:", kth_smallest)
+    
+except ValueError:
+    print("Invalid input. Please enter a valid integer array and value of k.")
